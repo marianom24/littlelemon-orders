@@ -5,11 +5,11 @@ from rest_framework.decorators import api_view, throttle_classes, permission_cla
 from .models import Category, MenuItem, Cart, OrderItem, Order
 from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderItemSerializer, OrderSerializer, UserSerializer, OrderDeliveryUpdateSerializer, OrderManagerUpdateSerializer
 from django.contrib.auth.models import User, Group
+from django.db.models import Sum
 from rest_framework.permissions import  IsAuthenticated, IsAdminUser
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from django.core.paginator import Paginator
 from datetime import datetime
-from .filters import MenuItemFilter
 from .models import UserComments
 from django.http import JsonResponse
 from .forms import CommentForm
@@ -220,22 +220,25 @@ def order_view(request):
         if not cart_items.exists():
             return Response({'message': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
         
-        total_price = sum(item.price for item in cart_items)
-
         order = Order.objects.create(
-            user = user,
-            status = False,
-            total = total_price,
-            date = datetime.today(),
+        user = user,
+        status = False,
+        date = datetime.today(),
         )
+
         for item in cart_items:
             OrderItem.objects.create(
                 order=order,
                 menu_item = item.menu_item,
                 quantity = item.quantity,
                 unit_price = item.unit_price,
-                price = item.price,
+                total = item.total_price,
             )
+
+        total_price = OrderItem.objects.filter(order=order).aggregate(Sum('total_price'))['total_price__sum']
+        order.total = total_price
+        order.save()
+
         cart_items.delete()
         serialized_order = OrderSerializer(order)
         return Response(serialized_order.data, status=status.HTTP_201_CREATED)
@@ -293,7 +296,6 @@ def form_view(request):
         if form.is_valid():
             clean_data = form.cleaned_data
             user_comment  = UserComments(
-                menu_item = clean_data['menu_item'],
                 first_name = clean_data['first_name'],
                 last_name = clean_data['last_name'],
                 comment = clean_data['comment'],
