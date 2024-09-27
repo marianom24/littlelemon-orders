@@ -16,7 +16,7 @@ Authentication and authorisation through user roles.
 - django-filter 24.3 for filtering and sorting
 
 
-##  Run Locally
+## :running:  Run Locally
 
 Activate enviroment 
 
