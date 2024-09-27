@@ -72,7 +72,7 @@ Run the server
 
 | Method | Endpoint     | Description                |
 | :-------- | :------- | :------------------------- |
-| GET | `cart` | Return all items in the current user cart|
+| GET | `cart` | Return all items in the current user's cart|
 
 #### Create order
 
