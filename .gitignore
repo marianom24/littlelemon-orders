@@ -6,3 +6,4 @@ utils.py
 models copy.py
 views copy.py
 filters.py
+__pycache__

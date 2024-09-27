@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, MenuItem, Cart, Order, OrderItem, User
+from .models import Category, MenuItem, CartItem, Order, OrderItem, User
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -18,7 +18,7 @@ class CartSerializer(serializers.ModelSerializer):
     menu_item_id = serializers.IntegerField(write_only=True)
 
     class Meta:
-        model = Cart
+        model = CartItem
         fields = ['user', 'menu_item', 'quantity', 'unit_price', 'price', 'menu_item_id']
 
 

@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, throttle_classes, permission_classes
-from .models import Category, MenuItem, Cart, OrderItem, Order
+from .models import Category, MenuItem, CartItem, OrderItem, Order
 from .serializers import CategorySerializer, MenuItemSerializer, CartSerializer, OrderItemSerializer, OrderSerializer, UserSerializer, OrderDeliveryUpdateSerializer, OrderManagerUpdateSerializer
 from django.contrib.auth.models import User, Group
 from django.db.models import Sum
@@ -154,7 +154,7 @@ def groups_singleuser_view(request, group, id):
 def cart_view(request):
     if request.method == 'GET':
         user = request.user
-        items = Cart.objects.filter(user_id = user.id) #tenes configurado para usar el username como user ID#
+        items = CartItem.objects.filter(user_id = user.id) #tenes configurado para usar el username como user ID#
         serialized_items = CartSerializer(items, many=True)
         return Response(serialized_items.data, status=status.HTTP_200_OK)
     if request.method == 'POST':
@@ -164,7 +164,7 @@ def cart_view(request):
         return Response(serialized_item.data, status=status.HTTP_201_CREATED)
     if request.method == 'DELETE':
         user = request.user
-        cart = Cart.objects.filter(user_id = user.id)
+        cart = CartItem.objects.filter(user_id = user.id)
         cart.delete()
         return Response({'message':'Removed'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -216,7 +216,7 @@ def order_view(request):
             except:
                 return Response(status=status.HTTP_404_BAD_REQUEST)
     if request.method == 'POST':
-        cart_items = Cart.objects.filter(user_id=user.id)
+        cart_items = CartItem.objects.filter(user_id=user.id)
         if not cart_items.exists():
             return Response({'message': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
         

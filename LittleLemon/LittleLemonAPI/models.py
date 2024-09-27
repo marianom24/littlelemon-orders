@@ -17,7 +17,7 @@ class MenuItem(models.Model):
     def __str__(self) -> str:
         return self.title
 
-class Cart(models.Model):
+class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.SmallIntegerField()
