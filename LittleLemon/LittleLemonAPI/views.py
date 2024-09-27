@@ -67,7 +67,6 @@ def single_menu_item(request, id):
     manager_check = request.user.groups.filter(name='manager').exists()
     admin_check = request.user.is_superuser
     item = get_object_or_404(MenuItem, pk=id)
-    user = get_object_or_404(User, username= request.user)
 
     if request.method == 'GET':
         serialized_item = MenuItemSerializer(item)
@@ -281,7 +280,13 @@ def single_order_view(request, id):
         else:
             return Response({'message':'You are not allowed'},status=status.HTTP_401_UNAUTHORIZED) 
 
-class CategoryView(generics.ListCreateAPIView): #deberia hacer un rewrite para permitir ver a todos las categorias pero que solo las pueda cambiar el manager#
+class CategoryView(generics.ListAPIView): 
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    permission_classes = [IsAuthenticated]
+
+class CategoryViewAdmin(generics.ListCreateAPIView, generics.UpdateAPIView):
     throttle_classes = [AnonRateThrottle, UserRateThrottle]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()

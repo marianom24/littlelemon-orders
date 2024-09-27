@@ -10,6 +10,7 @@ urlpatterns = [
     path('orders', views.order_view),
     path('orders/<int:id>', views.single_order_view),
     path('categories', views.CategoryView.as_view()),
+    path('categories-admin', views.CategoryViewAdmin.as_view()),
     path('form', views.form_view)
 
 ]
