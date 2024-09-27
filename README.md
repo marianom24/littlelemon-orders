@@ -106,7 +106,7 @@ Example request
 
 | Method | Endpoint     | Description                |
 | :-------- | :------- | :------------------------- |
-| POST | `order` | Gets all the cart's items and put in an order|
+| POST | `order` |Post user's credentials|
 
 Example response
 
