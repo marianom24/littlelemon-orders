@@ -3,7 +3,7 @@
 
 Online food ordering system.
 Menus with the possibility of ordering, filtering and searching items, distributed in pages.
-Authentication and authorisation through user roles.
+Authentication and authorization through user roles.
 
 
 
