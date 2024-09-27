@@ -1,5 +1,5 @@
 
-# LittleLemon API 
+# :lemon: LittleLemon API 
 
 Online food ordering system.
 Menus with the possibility of ordering, filtering and searching items, distributed in pages.
@@ -8,7 +8,7 @@ Authentication and authorisation through user roles.
 
 
 
-## Tech Stack
+## :wrench: Tech Stack
 
 - Django 4.2.14
 - Django REST Framework 3.15.2
@@ -16,7 +16,7 @@ Authentication and authorisation through user roles.
 - django-filter 24.3 for filtering and sorting
 
 
-## Run Locally
+##  Run Locally
 
 Activate enviroment 
 
@@ -33,7 +33,7 @@ Run the server
 ```bash
   python manage.py runserver
 ```
-## Common endpoints
+## :star: Common endpoints
 
 #### Get all menu items
 
@@ -85,7 +85,7 @@ Run the server
 | POST | `order` | Gets all the cart's items and put in an order|
 
 
-## Authentication
+## :passport_control: Authentication
 Usual endpoints
 
 ### Create user
