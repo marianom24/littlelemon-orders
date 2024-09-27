@@ -108,7 +108,16 @@ Example request
 | :-------- | :------- | :------------------------- |
 | POST | `order` | Gets all the cart's items and put in an order|
 
-### Create user
+Example response
+
+```bash
+  {
+  "username": "someuser",
+  "email": "some@user.com",
+  }
+```
+
+### Get auth token
 
 ```http
   POST /auth/token/login
