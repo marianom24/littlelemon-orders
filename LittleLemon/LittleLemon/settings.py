@@ -143,3 +143,8 @@ REST_FRAMEWORK = {
         'user':'20/minute'
     },
 }
+
+
+DJOSER = {
+    'LOGIN_FIELD': 'username',
+}

@@ -7,3 +7,4 @@ models copy.py
 views copy.py
 filters.py
 __pycache__
+readme.md

@@ -292,7 +292,9 @@ class CategoryViewAdmin(generics.ListCreateAPIView, generics.UpdateAPIView):
     queryset = Category.objects.all()
     permission_classes = [IsAdminUser]
 
-
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@throttle_classes([AnonRateThrottle, UserRateThrottle])
 def form_view(request):
     form = CommentForm()
     
